@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无线电监测实验教学系统-得分情况模块</title>
+    <script src="https://cdn.staticfile.org/echarts/5.3.2/echarts.min.js"></script>
+</head>
+<style>
+    .css1 {
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    .card2 {
+        height: 200px;
+        width: 600px;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 4px;
+        display: inline-block;
+        margin-left: 18px;
+        vertical-align: top;
+        position: relative;
+        left: 25%;
+    }
+</style>
+
+<body>
+    <div align="center">
+        <h3>成绩单</h3>
+        <table id="biaoge" border="1" class="css1">
+            <tr>
+                <th>id</th>
+                <th>pscan</th>
+                <th>mscan</th>
+                <th>ffm</th>
+                <th>fscan</th>
+                <th>sum</th>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div align="center" class="card2">
+        <h3 align="center">得分情况</h3>
+        <table>
+            <tr>
+                <td>
+                    pscan部分均分为：
+                </td>
+                <td>
+                    <label id="pscanA"></label>
+                </td>
+                <td>
+                    ，你在该部分的得分为：
+                </td>
+                <td>
+                    <label id="yourpscan"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    mscan部分均分为：
+                </td>
+                <td>
+                    <label id="mscanA"></label>
+                </td>
+                <td>
+                    ，你在该部分的得分为：
+                </td>
+                <td>
+                    <label id="yourmscan"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ffm部分均分为：
+                </td>
+                <td>
+                    <label id="ffmA"></label>
+                </td>
+                <td>
+                    ，你在该部分的得分为：
+                </td>
+                <td>
+                    <label id="yourffm"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    fscan部分均分为：
+                </td>
+                <td>
+                    <label id="fscanA"></label>
+                </td>
+                <td>
+                    ，你在该部分的得分为：
+                </td>
+                <td>
+                    <label id="yourfscan"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    总分均分为：
+                </td>
+                <td>
+                    <label id="zongfenA"></label>
+                </td>
+                <td>
+                    ，你的总为：
+                </td>
+                <td>
+                    <label id="yourzongfen"></label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div align="center">
+        <div id="AAA" style="width: 600px; height: 400px"></div>
+    </div>
+    <br>
+    <div align="center" class="card2">
+        <h3 align="center">得分区间人数</h3>
+        <table>
+            <tr>
+                <td>
+                    60分以下人数：
+                </td>
+                <td>
+                    <label id="E"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    60-70分人数：
+                </td>
+                <td>
+                    <label id="D"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    70-80分人数：
+                </td>
+                <td>
+                    <label id="C"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    80-90分人数：
+                </td>
+                <td>
+                    <label id="B"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    90-100分人数：
+                </td>
+                <td>
+                    <label id="A"></label>
+                </td>
+            </tr>
+        </table>
+        <div align="center">
+            <div id="main" style="width: 600px; height: 400px"></div>
+        </div>
+    </div>
+
+
+
+</body>
+
+
+<script type="text/javascript">
+    var fso, ts, s;
+    var ForReading = 1;
+    var ForZhuijia = 8;
+    fso = new ActiveXObject("Scripting.FileSystemObject");
+    ts = fso.OpenTextFile("D:\\vscodexiangmu\\py\\chengjidan.txt", ForReading);
+    var listS = [];
+    while (!ts.AtEndOfStream) {
+        listS.push(ts.Readline());
+    }
+    var pscanSum = 0;
+    var mscanSum = 0;
+    var ffmSum = 0;
+    var fscanSum = 0;
+    var zongfenSum = 0;
+    var pE = 0;
+    var pD = 0;
+    var pC = 0;
+    var pB = 0;
+    var pA = 0;
+    for (var i = 0; i < listS.length; i++) {
+        var s = listS[i];
+        var list = s.split(' ');
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+        var td3 = document.createElement("td");
+        var td4 = document.createElement("td");
+        var td5 = document.createElement("td");
+        var td6 = document.createElement("td");
+        td1.innerHTML = list[0];
+        td2.innerHTML = list[1];
+        td3.innerHTML = list[2];
+        td4.innerHTML = list[3];
+        td5.innerHTML = list[4];
+        td6.innerHTML = list[5];
+        pscanSum += parseInt(list[1]);
+        mscanSum += parseInt(list[2]);
+        ffmSum += parseInt(list[3]);
+        fscanSum += parseInt(list[4]);
+        zongfenSum += parseInt(list[5]);
+        if (parseInt(list[5]) < 60) {
+            pE += 1;
+        }
+        if (parseInt(list[5]) >= 60 && parseInt(list[5]) < 70) {
+            pD += 1;
+        }
+        if (parseInt(list[5]) >= 70 && parseInt(list[5]) < 80) {
+            pC += 1;
+        }
+        if (parseInt(list[5]) >= 80 && parseInt(list[5]) < 90) {
+            pB += 1;
+        }
+        if (parseInt(list[5]) >= 90 && parseInt(list[5]) <= 100) {
+            pA += 1;
+        }
+        document.getElementById("biaoge").appendChild(tr);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        tr.appendChild(td6);
+    }
+    console.log(pscanSum);
+    console.log(mscanSum);
+    console.log(ffmSum);
+    console.log(fscanSum);
+    console.log(zongfenSum);
+
+    var pscanAverage;
+    pscanAverage = pscanSum / listS.length;
+    pscanAverage = pscanAverage.toFixed(2);
+    var mscanAverage;
+    mscanAverage = mscanSum / listS.length;
+    mscanAverage = mscanAverage.toFixed(2);
+    var ffmAverage;
+    ffmAverage = ffmSum / listS.length;
+    ffmAverage = ffmAverage.toFixed(2);
+    var fscanAverage;
+    fscanAverage = fscanSum / listS.length;
+    fscanAverage = fscanAverage.toFixed(2);
+    var zongfenAverage;
+    zongfenAverage = zongfenSum / listS.length;
+    zongfenAverage = zongfenAverage.toFixed(2);
+
+    document.getElementById("pscanA").innerHTML = pscanAverage;
+    document.getElementById("mscanA").innerHTML = mscanAverage;
+    document.getElementById("ffmA").innerHTML = ffmAverage;
+    document.getElementById("fscanA").innerHTML = fscanAverage;
+    document.getElementById("zongfenA").innerHTML = zongfenAverage;
+
+    //获取父页面数据
+    var youPscan = window.opener.pscanFenshu;
+    var youMscan = window.opener.mscanFenshu;
+    var youFfm = window.opener.ffmFenshu;
+    var youFscan = window.opener.fscanFenshu;
+    var youZong = window.opener.zongfenshu;
+    document.getElementById("yourpscan").innerHTML = youPscan;
+    document.getElementById("yourmscan").innerHTML = youMscan;
+    document.getElementById("yourffm").innerHTML = youFfm;
+    document.getElementById("yourfscan").innerHTML = youFscan;
+    document.getElementById("yourzongfen").innerHTML = youZong;
+
+    document.getElementById("E").innerHTML = pE;
+    document.getElementById("D").innerHTML = pD;
+    document.getElementById("C").innerHTML = pC;
+    document.getElementById("B").innerHTML = pB;
+    document.getElementById("A").innerHTML = pA;
+
+
+    var myChart1 = echarts.init(document.getElementById("AAA"));
+    var junfen = [];
+    junfen.push(pscanAverage);
+    junfen.push(mscanAverage);
+    junfen.push(ffmAverage);
+    junfen.push(fscanAverage);
+    junfen.push(zongfenAverage);
+    var youfen = [];
+    youfen.push(youPscan);
+    youfen.push(youMscan);
+    youfen.push(youFfm);
+    youfen.push(youFscan);
+    youfen.push(youZong);
+    //var ceshi = [10, 20, 30, 40, 50];
+    myChart1.setOption({
+        legend: {
+            data: ['平均分', '你的得分']
+        },
+
+        tooltip: {
+            trigger: 'item',
+        },
+        xAxis: {
+            data: ['PSCAN', 'MSCAN', 'FFM', 'FSCAN', '总分']
+        },
+        yAxis: {
+
+        },
+        series: [
+            {
+                name: '平均分',
+                data: junfen,
+                type: 'bar',
+                emphasis: {
+                    focus: 'series'
+                },
+            },
+            {
+                name: '你的得分',
+                type: 'bar',
+                emphasis: {
+                    focus: 'series'
+                },
+                data: youfen
+            },
+        ],
+    });
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    var v = [];
+    v.push(pE);
+    v.push(pD);
+    v.push(pC);
+    v.push(pB);
+    v.push(pA);
+    var a = ["60分以下人数", "60-70分人数", "70-80分人数", "80-90分人数", "90-100分人数"];
+    var pieList = [];
+    for (let i = 0; i < this.a.length; i++) {
+        var d = new Object();
+        d.name = a[i];
+        d.value = v[i];
+        pieList.push(d);
+    }
+    console.log(pieList);
+    myChart.setOption({
+        tooltip: {
+            trigger: 'item',
+        },
+        series: [
+            {
+                type: "pie", // 设置图表类型为饼图
+                radius: "55%", // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                data: pieList,
+            },
+        ],
+    });
+</script>
+
+</html>

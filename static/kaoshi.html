@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无线电监测实验教学系统-考试模块</title>
+    <style>
+        .timers {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 10px;
+            font-weight: 700;
+            text-align: center;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .timers span {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #2f3430;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .timers span::after {
+            content: "：";
+            position: absolute;
+            top: 0;
+            right: -23px;
+            display: block;
+            width: 20px;
+            height: 100%;
+            font-size: 18px;
+            color: red;
+
+        }
+
+        .timers span:last-of-type::after {
+            content: "";
+        }
+
+        #btn {
+            margin-left: -22px;
+        }
+
+        .card2 {
+
+            height: 230px;
+
+            width: 330px;
+
+            background-color: white;
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+            border-radius: 4px;
+
+            display: inline-block;
+
+            margin-left: 18px;
+
+            vertical-align: top;
+            position: relative;
+            left: 20%;
+        }
+
+        .card3 {
+
+            height: 480px;
+
+            width: 500px;
+
+            background-color: white;
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+            border-radius: 4px;
+
+            display: inline-block;
+
+            margin-left: 18px;
+
+            vertical-align: top;
+
+            position: relative;
+            left: 50%;
+            bottom: 515px;
+        }
+
+        .card4 {
+
+            height: 480px;
+
+            width: 500px;
+
+            background-color: white;
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+            border-radius: 4px;
+
+            display: inline-block;
+
+            margin-left: 18px;
+
+            vertical-align: top;
+
+            position: relative;
+            left: 50%;
+            bottom: 533px;
+        }
+
+        .divcss5 {
+            border: 1px solid #F00
+        }
+
+        .imgBox {
+            border-top: 2px solid cadetblue;
+            width: 100%;
+            height: 250px;
+            margin: 0 auto;
+
+        }
+
+        .imgBox img {
+            width: 480PX;
+            height: 450px;
+            margin: 0 auto;
+            padding-top: 30px;
+
+        }
+
+        .img1 {
+            display: block;
+        }
+
+        .img2 {
+            display: none;
+        }
+
+        .img3 {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 倒计时部分 -->
+    <div class="timers">
+        <span id="minute">10</span>
+        <span id="second">00</span>
+        <!-- <span id="mil">00</span><br> -->
+        <br>
+        <label id="kaishitishi">点击开始考试后，请在10分钟内完成考试，考试过程中不能暂停。</label>
+        <br>
+        <input type="button" value="开始考试" id="btn">
+    </div>
+    <div id="kaoshiqingkuang" align="center" style="display: none;">
+        <label id="totalResult"></label>
+        <br>
+        <input type="button" value="查看考试情况" onclick="chuanzhihanshu()">
+        <br>
+        <br>
+    </div>
+
+    <div id="timuxunhao" align="center" style="display: none;">
+        <input type="button" id="timu1" value="题目1" onclick="button1()">
+        &nbsp;
+        <input type="button" id="timu2" value="题目2" onclick="button2()">
+        &nbsp;
+        <input type="button" id="timu3" value="题目3" onclick="button3()">
+        &nbsp;
+        <input type="button" id="timu4" value="题目4" onclick="button4()">
+    </div>
+    <br>
+
+    <!-- //psacn考试部分 -->
+    <div id="pscan" style="display: none;">
+        <div align="center">
+            <label id="pscanResult"></label>
+            <label id="pscanHOUXUHOUXU"></label>
+        </div>
+        <!-- 题目部分 -->
+        <div class="card2" align="center">
+            <h3 align="center">题目</h3>
+            <table>
+                <tr>
+                    请完成以下扫描的参数设置：
+                </tr>
+                <tr>
+                    <td>
+                        设置通信协议为：
+                    </td>
+                    <td>
+                        SCPI
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        全景扫描
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置起始频率为：
+                    </td>
+                    <td>
+                        <label id="pscan_startF"></label>
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置终止频率为：
+                    </td>
+                    <td>
+                        <label id="pscan_stopF"></label>
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置步进为：
+                    </td>
+                    <td>
+                        <label id="pscan_stepF"></label>
+                        kHz
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <br>
+        <!-- //pscan答题部分 -->
+        <div class="card2" align="center">
+            <table id="pscanTbale1">
+                <tr>
+                    <h3 align="center">答题</h3>
+                </tr>
+
+                <tr>
+                    <td>
+                        通信协议：
+                    </td>
+                    <td>
+                        <input type="text" id="pcan_xieyi" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式：
+                    </td>
+                    <td>
+                        <select id="pscan_saomiao">
+                            <option value="PSCAN">PSCAN</option>
+                            <option value="FSCAN">FSCAN</option>
+                            <option value="MSCAN">MSCAN</option>
+                            <option value="FFM">FFM</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        FREQ:PSC:STAR:
+                    </td>
+                    <td>
+                        <input type="text" id="pscan_startFreq" />
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        FREQ:PSC:STOP:
+                    </td>
+                    <td>
+                        <input type="text" id="pscan_stopFreq" />
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        PSC:STEP:
+                    </td>
+                    <td>
+                        <input type="text" id="pscan_stepFreq" />
+                        kHz
+                    </td>
+                </tr>
+            </table>
+            <div align="center">
+                <input type="button" id="pscanButton" value="确定" onclick="comparePscan()" />
+            </div>
+            <br>
+            <div id="pscanHOUXU1" style="display: none;">
+                <label>结合频谱图回答下列问题</label>
+                <table>
+                    <tr>
+                        <td>
+                            1、下列哪个频段有信号且最强：
+                        </td>
+                        <td>
+                            <select id="pscan_1">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="pscan_11"></label>
+                        </td>
+                    </tr>
+                </table>
+                <div align="center">
+                    <input type="button" id="pscanhouxu" value="确定" onclick="comparePscanHOUXU()" />
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+
+        <br>
+        <div class="card3">
+            <!-- //pscan对应图片显示区域 -->
+            <div id="pscanimg" style="display: none;">
+                <div class="imgBox">
+                    <img class="img-slide img1" id="PSCANIMG1" alt="1">
+                    <img class="img-slide img2" id="PSCANIMG2" alt="2">
+                    <img class="img-slide img3" id="PSCANIMG3" alt="3">
+                    <img class="img-slide img4" id="PSCANIMG4" alt="4">
+                    <img class="img-slide img5" id="PSCANIMG5" alt="5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MSCAN考试部分  -->
+    <div id="mscan" style="display: none;">
+        <div align="center">
+            <label id="mscanResult"></label>
+            <label id="mscanHOUXU"></label>
+        </div>
+        <div class="card2" align="center">
+            <h3 align="center">题目</h3>
+            <table>
+                <tr>
+                    请完成以下扫描的参数设置：
+                </tr>
+                <tr>
+                    <td>
+                        设置通信协议为：
+                    </td>
+                    <td>
+                        SCPI
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        离散扫描
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描参数为
+                    </td>
+                    <td>
+                        <label id="mscancanshu"></label>
+                        MHz
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <br>
+
+
+        <!-- 答题部分 -->
+        <div class="card2" align="center">
+            <h3 align="center">答题</h3>
+            <table id="mscanTable1">
+                <tr>
+                    <td>
+                        通信协议：
+                    </td>
+                    <td>
+                        <input type="text" id="mscan_xieyi" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        <select id="mscan_saomiao">
+                            <option value="PSCAN">PSCAN</option>
+                            <option value="FSCAN">FSCAN</option>
+                            <option value="MSCAN">MSCAN</option>
+                            <option value="FFM">FFM</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描频率：
+                    </td>
+                    <td>
+                        <input type="text" id="mscan_canshu" />
+                        MHz
+                    </td>
+                </tr>
+            </table>
+            <div align="center">
+                <input type="button" id="mscanButton" value="确定" onclick="compareMscan()" />
+            </div>
+            <div id="mscanHouxutimu" style="display: none;" align="center">
+                <label>结合频谱图回答下列问题</label>
+                <br>
+                <label>如果信号门限为20，请问哪些频率可能有信号(MHz)：</label>
+                <input type="text" id="mscan_houxu" />
+                <br>
+                <input type="button" id="mscanButtonhouxu" value="确定" onclick="compareMscanHouxu()" />
+                <br>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="card4">
+            <!-- //mscan对应图片显示区域 -->
+            <div id="mscanimg" style="display: none;">
+                <div class="imgBox">
+                    <img class="img-slide2 img1" id="MSCANIMG1" alt="1">
+                    <img class="img-slide2 img2" id="MSCANIMG2" alt="2">
+                    <img class="img-slide2 img3" id="MSCANIMG3" alt="3">
+                    <img class="img-slide2 img4" id="MSCANIMG4" alt="4">
+                    <img class="img-slide2 img5" id="MSCANIMG5" alt="5">
+                    <img class="img-slide2 img6" id="MSCANIMG6" alt="6">
+                    <img class="img-slide2 img7" id="MSCANIMG7" alt="7">
+                    <img class="img-slide2 img8" id="MSCANIMG8" alt="8">
+                    <img class="img-slide2 img9" id="MSCANIMG9" alt="9">
+                    <img class="img-slide2 img10" id="MSCANIMG10" alt="10">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--FFM考试部分  -->
+    <div id="ffm" style="display: none;">
+        <div align="center">
+            <label id="ffmResult"></label>
+            <label id="ffmResult2"></label>
+        </div>
+        <div class="card2" align="center">
+            <h3 align="center">题目</h3>
+            <table>
+                <tr>
+                    请完成以下扫描的参数设置：
+                </tr>
+                <tr>
+                    <td>
+                        设置通信协议为：
+                    </td>
+                    <td>
+                        SCPI
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        单频测量
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        中心频率为：
+                    </td>
+                    <td>
+                        <label id="ffm_centerF"></label>
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        调解带宽为：
+                    </td>
+                    <td>
+                        <label id="ffm_bandF"></label>
+                        kHz
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <br>
+        <br>
+        <!-- 答题部分 -->
+        <div class="card2" align="center">
+            <h3 align="center">答题</h3>
+            <table id="ffmTable22">
+                <tr>
+                    <td>
+                        通信协议：
+                    </td>
+                    <td>
+                        <input type="text" id="ffm_xieyi" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        <select id="ffm_saomiao">
+                            <option value="PSCAN">PSCAN</option>
+                            <option value="FSCAN">FSCAN</option>
+                            <option value="MSCAN">MSCAN</option>
+                            <option value="FFM">FFM</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        FREQuency:
+                    </td>
+                    <td>
+                        <input type="text" id="ffm_CF" />
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td>
+                        BAND:
+                    </td>
+                    <td>
+                        <input type="text" id="ffm_BF" />
+                        kHz
+                    </td>
+                </tr>
+            </table>
+            <div align="center">
+                <input type="button" id="ffmButton" value="确定" onclick="compareFfm()" />
+            </div>
+            <div id="ffmTable" style="display: none;" align="center">
+                <label>结合频谱图回答下列问题</label>
+                <br>
+                <table>
+                    <tr>
+                        <td>
+                            <label>该单频测量显示宽度大致为：</label>
+                        </td>
+                        <td>
+                            <select id="ffm_1">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="ffm_2"></label>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <input type="button" id="FFMHOUXU" value="确定" onclick="compareFfmHOUXU()" />
+                <br>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="card4">
+            <!-- 此处加ffm对应数据图片 -->
+            <div id="ffmimg" style="display: none;">
+                <div class="imgBox">
+                    <img class="img-slide3 img1" id="FFMIMG1" alt="1">
+                    <img class="img-slide3 img2" id="FFMIMG2" alt="2">
+                    <img class="img-slide3 img3" id="FFMIMG3" alt="3">
+                    <img class="img-slide3 img4" id="FFMIMG4" alt="4">
+                    <img class="img-slide3 img5" id="FFMIMG5" alt="5">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FSCAN考试部分 -->
+    <div id="fscan" style="display: none;">
+        <div align="center">
+            <label id="fscanResult"></label>
+        </div>
+        <div class="card2" align="center">
+            <h3 align="center">题目</h3>
+            <table>
+                <tr>
+                    请完成以下扫描的参数设置：
+                </tr>
+                <tr>
+                    <td>
+                        设置通信协议为：
+                    </td>
+                    <td>
+                        SCPI
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        频率扫描
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置起始频率为：
+                    </td>
+                    <td>
+                        <label id="fscan_startF"></label>
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置终止频率为：
+                    </td>
+                    <td>
+                        <label id="fscan_stopF"></label>
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        设置步进为：
+                    </td>
+                    <td>
+                        <label id="fscan_stepF"></label>
+                        kHz
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <br>
+        <!-- 答题部分 -->
+        <div class="card2" align="center">
+            <h3 align="center">答题</h3>
+            <table>
+                <tr>
+                    <td>
+                        通信协议：
+                    </td>
+                    <td>
+                        <input type="text" id="fscan_xieyi" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        扫描方式为：
+                    </td>
+                    <td>
+                        <select id="fscan_saomiao">
+                            <option value="PSCAN">PSCAN</option>
+                            <option value="FSCAN">FSCAN</option>
+                            <option value="MSCAN">MSCAN</option>
+                            <option value="FFM">FFM</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        FREQ:STAR:
+                    </td>
+                    <td>
+                        <input type="text" id="fscan_startFreq" />
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        FREQ:STOP:
+                    </td>
+                    <td>
+                        <input type="text" id="fscan_stopFreq" />
+                        MHz
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        STEP:
+                    </td>
+                    <td>
+                        <input type="text" id="fscan_stepFreq" />
+                        kHz
+                    </td>
+                </tr>
+            </table>
+            <div align="center">
+                <input type="button" id="fscanButton" value="确定" onclick="compareFscan()" />
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="card4">
+            <div id="fscanimg" style="display: none;">
+                <div class="imgBox">
+                    <img class="img-slide4 img1" id="FSCANIMG1" alt="1">
+                    <img class="img-slide4 img2" id="FSCANIMG2" alt="2">
+                    <img class="img-slide4 img3" id="FSCANIMG3" alt="3">
+                    <img class="img-slide4 img4" id="FSCANIMG4" alt="4">
+                    <img class="img-slide4 img5" id="FSCANIMG5" alt="5">
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+</body>
+
+<script type="text/javascript">
+
+    //PSCAN图显示
+    var index = 0;
+    //效果
+    function ChangeImg() {
+        index++;
+        var a = document.getElementsByClassName("img-slide");
+        if (index >= a.length) index = 0;
+        for (var i = 0; i < a.length; i++) {
+            a[i].style.display = 'none';
+        }
+        a[index].style.display = 'block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg, 1000);
+
+    //MSCAN显示
+    var index2 = 0;
+    //效果
+    function ChangeImg2() {
+        index2++;
+        var b = document.getElementsByClassName("img-slide2");
+        if (index2 >= b.length) index2 = 0;
+        for (var i = 0; i < b.length; i++) {
+            b[i].style.display = 'none';
+        }
+        b[index2].style.display = 'block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg2, 1000);
+
+    //FFM显示
+    var index3 = 0;
+    //效果
+    function ChangeImg3() {
+        index3++;
+        var c = document.getElementsByClassName("img-slide3");
+        if (index3 >= c.length) index3 = 0;
+        for (var i = 0; i < c.length; i++) {
+            c[i].style.display = 'none';
+        }
+        c[index3].style.display = 'block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg3, 1000);
+
+    //FSCAN显示
+    var index4 = 0;
+    //效果
+    function ChangeImg4() {
+        index4++;
+        var d = document.getElementsByClassName("img-slide4");
+        if (index4 >= d.length) index4 = 0;
+        for (var i = 0; i < d.length; i++) {
+            d[i].style.display = 'none';
+        }
+        d[index4].style.display = 'block';
+    }
+    //设置定时器，每隔两秒切换一张图片
+    setInterval(ChangeImg4, 1000);
+
+    var id = 57; //用户ID
+
+    var pscanZZ = false;
+    var mscanZZ1 = false;
+    var mscanZZ2 = false;
+    var ffmZZ = false;
+    var fscanZZ = false;
+    //总时间
+    var maxMinute = 10 * 60;    // 10分钟,以秒为单位计算
+    function countTime() {
+        if (maxMinute >= 0) {
+            maxMinute--;
+            $('minute').innerText = addzero(Math.floor(maxMinute / 60));  //分钟
+            $('second').innerText = addzero(Math.floor(maxMinute % 60));  //秒
+            if (maxMinute == 0) {
+                zongfenshu = pscanFenshu + mscanFenshu + ffmFenshu + fscanFenshu;
+                alert("考试结束\n总分数为：" + zongfenshu);
+                //pscan部分禁止填写。
+                document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+                document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("pscanButton").setAttribute("disabled", true);
+                //mscan部分禁止填写
+                document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("mscan_canshu").setAttribute("disabled", true);
+                document.getElementById("mscanButton").setAttribute("disabled", true);
+                document.getElementById("mscan_houxu").setAttribute("disabled", true);
+                document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+                //ffm部分禁止填写
+                document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+                document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+                document.getElementById("ffm_CF").setAttribute("disabled", true);
+                // document.getElementById("ffm_SF").setAttribute("disabled", true);
+                document.getElementById("ffm_BF").setAttribute("disabled", true);
+                document.getElementById("ffmButton").setAttribute("disabled", true);
+                //fscan部分禁止填写
+                document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("fscanButton").setAttribute("disabled", true);
+                var total = "考试结束，考试总分为：";
+                total += zongfenshu;
+                document.getElementById("totalResult").innerHTML = total;
+                writeTotxt(id, pscanFenshu, mscanFenshu, ffmFenshu, fscanFenshu, zongfenshu);
+                document.getElementById("kaoshiqingkuang").style.display = "";
+            }
+        }
+    }
+    var timer = null;    //清除定时器变量
+    var flag = true;     //开关
+    $('btn').onclick = function () {
+        if (flag) {
+            flag = false;
+            //开启定时器倒计时
+            timer = setInterval("countTime()", 1000);
+            document.getElementById("btn").style.display = "none";
+            document.getElementById("kaishitishi").style.display = "none";
+            document.getElementById("pscan").style.display = "";
+            document.getElementById("mscan").style.display = "none";
+            document.getElementById("ffm").style.display = "none";
+            document.getElementById("fscan").style.display = "none";
+            document.getElementById("timuxunhao").style.display = "";
+        } else {
+            flag = true;
+            this.value = '继续倒计时';
+            clearInterval(timer); //清除定时器
+        }
+    }
+    function addzero(num) {
+        return num < 10 ? ('0' + num) : num;
+    }
+    function $(id) {
+        return typeof id === 'string' ? document.getElementById(id) : null;
+    }
+
+    function button1() {
+        document.getElementById("pscan").style.display = "";
+        document.getElementById("mscan").style.display = "none";
+        document.getElementById("ffm").style.display = "none";
+        document.getElementById("fscan").style.display = "none";
+    }
+
+    function button2() {
+        document.getElementById("pscan").style.display = "none";
+        document.getElementById("mscan").style.display = "";
+        document.getElementById("ffm").style.display = "none";
+        document.getElementById("fscan").style.display = "none";
+    }
+
+    function button3() {
+        document.getElementById("pscan").style.display = "none";
+        document.getElementById("mscan").style.display = "none";
+        document.getElementById("ffm").style.display = "";
+        document.getElementById("fscan").style.display = "none";
+    }
+
+    function button4() {
+        document.getElementById("pscan").style.display = "none";
+        document.getElementById("mscan").style.display = "none";
+        document.getElementById("ffm").style.display = "none";
+        document.getElementById("fscan").style.display = "";
+    }
+
+
+
+
+
+
+
+    //写入txt文档
+    function writeTotxt(id, pscanF, mscanF, ffmF, fscanF, zF) {
+        var fso, ts, s;
+        var ForReading = 1;
+        var ForZhuijia = 8;
+        fso = new ActiveXObject("Scripting.FileSystemObject");
+        ts = fso.OpenTextFile("D:\\vscodexiangmu\\py\\chengjidan.txt", ForZhuijia);
+        var ss = "";
+        ss += id;
+        ss += " ";
+        ss += pscanF;
+        ss += " ";
+        ss += mscanF;
+        ss += " ";
+        ss += ffmF;
+        ss += " ";
+        ss += fscanF;
+        ss += " ";
+        ss += zF;
+        ts.writeLine(ss);
+        ts.close();
+    }
+
+
+    // 生成从minNum到maxNum的随机数。
+    // 如果指定decimalNum个数，则生成指定小数位数的随机数
+    // 如果不指定任何参数，则生成0-1之间的随机数。
+    // @minNum：[数据类型是Integer]生成的随机数的最小值（minNum和maxNum可以调换位置）
+    // @maxNum：[数据类型是Integer]生成的随机数的最大值
+    // @decimalNum：[数据类型是Integer]如果生成的是带有小数的随机数，则指定随机数的小数点后的位数
+    function randomNum(maxNum, minNum, decimalNum) {
+        var max = 0, min = 0;
+        minNum <= maxNum ? (min = minNum, max = maxNum) : (min = maxNum, max = minNum);
+        switch (arguments.length) {
+            case 1:
+                return Math.floor(Math.random() * (max + 1));
+                break;
+            case 2:
+                return Math.floor(Math.random() * (max - min + 1) + min);
+                break;
+            case 3:
+                return (Math.random() * (max - min) + min).toFixed(decimalNum);
+                break;
+            default:
+                return Math.random();
+                break;
+        }
+    }//函数结尾
+
+    function myFunction() {
+        var number = randomNum(0, 3);
+        document.getElementById("div_text").innerHTML = number;
+    }//函数结尾
+
+    //分数
+    var zongfenshu = 0;
+    var pscanFenshu = 0;
+    var mscanFenshu = 0;
+    var ffmFenshu = 0;
+    var fscanFenshu = 0;
+
+    //pscan考试内容
+    var pscan_canshu = "";
+    var number = randomNum(0, 4);
+    switch (number) {
+        case 0:
+            pscan_canshu = "87 108 25";
+            break;
+        case 1:
+            pscan_canshu = "90 100 25";
+            break;
+        case 2:
+            pscan_canshu = "93 105 50";
+            break;
+        case 3:
+            pscan_canshu = "99 105 50";
+            break;
+        case 4:
+            pscan_canshu = "100 108 100";
+            break;
+        default:
+            break;
+    }
+    //数据路径  
+    //var pscanpath = "D:\\datas\\PscanDatas\\" + pscan_canshu + "\\1.txt";
+    // pscan_canshu = "100 108 100";
+
+    var pscanpath = "img/PSCAN/" + pscan_canshu + "/";
+    var PSCANsrc1 = pscanpath + "1.png";
+    var PSCANsrc2 = pscanpath + "2.png";
+    var PSCANsrc3 = pscanpath + "3.png";
+    var PSCANsrc4 = pscanpath + "4.png";
+    var PSCANsrc5 = pscanpath + "5.png";
+    document.getElementById("PSCANIMG1").src = PSCANsrc1;
+    document.getElementById("PSCANIMG2").src = PSCANsrc2;
+    document.getElementById("PSCANIMG3").src = PSCANsrc3;
+    document.getElementById("PSCANIMG4").src = PSCANsrc4;
+    document.getElementById("PSCANIMG5").src = PSCANsrc5;
+
+    //pscan_11
+    if (pscan_canshu == "87 108 25") {
+        var pscan1S = "";
+        pscan1S += "A.96075000Hz-99100000Hz" + "<br>";
+        pscan1S += "B.87000000Hz-90025000Hz" + "<br>";
+        pscan1S += "C.93050000Hz-96075000Hz" + "<br>";
+        pscan1S += "D.102125000Hz-105150000Hz";
+        document.getElementById("pscan_11").innerHTML = pscan1S;
+    }
+    if (pscan_canshu == "90 100 25") {
+        var pscan1S = "";
+        pscan1S += "A.90000000Hz-91450000Hz" + "<br>";
+        pscan1S += "B.94350000Hz-95800000Hz" + "<br>";
+        pscan1S += "C.95800000Hz-97250000Hz" + "<br>";
+        pscan1S += "D.91450000Hz-92900000Hz";
+        document.getElementById("pscan_11").innerHTML = pscan1S;
+    }
+    if (pscan_canshu == "93 105 50") {
+        var pscan1S = "";
+        pscan1S += "A.93000000Hz-94750000Hz" + "<br>";
+        pscan1S += "B.94750000Hz-96500000Hz" + "<br>";
+        pscan1S += "C.98250000Hz-100000000Hz" + "<br>";
+        pscan1S += "D.100000000Hz-101750000Hz";
+        document.getElementById("pscan_11").innerHTML = pscan1S;
+    }
+    if (pscan_canshu == "99 105 50") {
+        var pscan1S = "";
+        pscan1S += "A.99000000Hz-99900000Hz" + "<br>";
+        pscan1S += "B.99900000Hz-100800000Hz" + "<br>";
+        pscan1S += "C.102600000Hz-103500000Hz" + "<br>";
+        pscan1S += "D.103500000Hz-104400000Hz";
+        document.getElementById("pscan_11").innerHTML = pscan1S;
+    }
+    if (pscan_canshu == "100 108 100") {
+        var pscan1S = "";
+        pscan1S += "A.100000000Hz-101200000Hz" + "<br>";
+        pscan1S += "B.102400000Hz-103600000Hz" + "<br>";
+        pscan1S += "C.103600000Hz-104800000Hz" + "<br>";
+        pscan1S += "D.104800000Hz-106000000Hz";
+        document.getElementById("pscan_11").innerHTML = pscan1S;
+    }
+
+
+    var list = pscan_canshu.split(' ');
+    var startFreq, stopFreq, stepFreq;
+    pstartFreq = list[0];
+    pstopFreq = list[1];
+    pstepFreq = list[2];
+    document.getElementById("pscan_startF").innerHTML = pstartFreq;
+    document.getElementById("pscan_stopF").innerHTML = pstopFreq;
+    document.getElementById("pscan_stepF").innerHTML = pstepFreq;
+    console.log(pscanpath);
+
+
+    function comparePscan() {
+        //标记正确个数，五个都正确才显示对应图像。
+        var yp = 0;
+        //获取协议
+        var pscanXieyi = document.getElementById("pcan_xieyi").value;
+        //获取扫描方式
+        var Sel = document.getElementById("pscan_saomiao");
+        var index = Sel.selectedIndex;
+        var pscanSaomiao = Sel.options[index].value;
+        //获取起始频率
+        var pscanStartFreq = document.getElementById("pscan_startFreq").value;
+        // //获取结束频率
+        var pscanStopFreq = document.getElementById("pscan_stopFreq").value;
+        // //获取步进
+        var pscanStepFreq = document.getElementById("pscan_stepFreq").value;
+        console.log(pscanXieyi);
+        console.log(pscanSaomiao);
+        console.log(pscanStartFreq);
+        console.log(pscanStopFreq);
+        console.log(pscanStepFreq);
+
+        //检验填写框是否为空
+        if (pscanXieyi == "" || pscanStartFreq == "" || pscanStopFreq == "" || pscanStepFreq == "") {
+            alert("不能有空");
+        } else {
+            //表示PSCAN部分以及答题答完
+            pscanZZ = true;
+            //填写点击确定后，设置文本框不可更改
+            document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+            document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+            //按钮不能重复按
+            document.getElementById("pscanButton").setAttribute("disabled", true);
+            var s = "";
+            if (pscanXieyi == "SCPI" || pscanXieyi == "scpi") {
+                pscanFenshu += 2;
+                yp += 1;
+                s += "协议正确；" + "<br>";
+            } else {
+                s += "协议不正确，应为：SCPI；" + "<br>";
+            }
+            if (pscanSaomiao == "PSCAN") {
+                yp += 1;
+                pscanFenshu += 2;
+                s += "扫描方式正确；" + "<br>";
+            } else {
+                s += "扫描不正确，应为：PSCAN;" + "<br>";
+            }
+            if (pscanStartFreq == pstartFreq) {
+                yp += 1;
+                pscanFenshu += 5;
+                s += "起始频率正确；" + "<br>";
+            } else {
+                s += "FREQ:PSC:STAR不正确，应为" + pstartFreq + "；" + "<br>";
+            }
+            if (pscanStopFreq == pstopFreq) {
+                yp += 1;
+                pscanFenshu += 5;
+                s += "终止频率正确；" + "<br>";
+            } else {
+                s += "FREQ:PSC:STOP不正确，应为：" + pstopFreq + "；" + "<br>";
+            }
+            if (pscanStepFreq == pstepFreq) {
+                yp += 1;
+                pscanFenshu += 5;
+                s += "步进正确；" + "<br>";
+            } else {
+                s += "PSC:STEP不正确，应为：" + pstepFreq + "；" + "<br>";
+            }
+            document.getElementById("pscanResult").innerHTML = s;
+            console.log(pscanFenshu);
+            // console.log(yp);
+            if (yp == 5) {
+                //在这里加显示数据图片的代码。对应数据路径为 pscanpath,在div的id等于pscanimg加数据图片
+                document.getElementById("pscanimg").style.display = "";//显示
+                document.getElementById("pscanTbale1").style.display = "none";
+                document.getElementById("pscanButton").style.display = "none";
+                document.getElementById("pscanHOUXU1").style.display = "";
+            }
+        }
+
+    }//函数结尾
+
+    function comparePscanHOUXU() {
+        var Sel = document.getElementById("pscan_1");
+        var index = Sel.selectedIndex;
+        var pscanHOUXU = Sel.options[index].value;
+        var houxuTIshi;
+        console.log(pscanHOUXU);
+        console.log(pscan_canshu);
+        if (pscan_canshu == "87 108 25") {
+            if (pscanHOUXU == "A") {
+                pscanFenshu += 6;
+                houxuTIshi = "选择正确;";
+            } else {
+                houxuTIshi = "不正确，应选A;";
+            }
+        }
+        if (pscan_canshu == "90 100 25") {
+            if (pscanHOUXU == "C") {
+                pscanFenshu += 6;
+                houxuTIshi = "选择正确;";
+            } else {
+                houxuTIshi = "不正确，应选C;";
+            }
+        }
+        if (pscan_canshu == "93 105 50") {
+            if (pscanHOUXU == "B") {
+                pscanFenshu += 6;
+                houxuTIshi = "选择正确;";
+            } else {
+                houxuTIshi = "不正确，应选B;";
+            }
+        }
+        if (pscan_canshu == "99 105 50") {
+            if (pscanHOUXU == "C") {
+                pscanFenshu += 6;
+                houxuTIshi = "选择正确;";
+            } else {
+                houxuTIshi = "不正确，应选C;";
+            }
+        }
+        if (pscan_canshu == "100 108 100") {
+            if (pscanHOUXU == "B") {
+                pscanFenshu += 6;
+                houxuTIshi = "选择正确;";
+            } else {
+                houxuTIshi = "不正确，应选B;";
+            }
+        }
+        console.log(pscanFenshu);
+        document.getElementById("pscanHOUXUHOUXU").innerHTML = houxuTIshi;
+        document.getElementById("pscan_1").setAttribute("disabled", true);
+        document.getElementById("pscanhouxu").setAttribute("disabled", true);
+        if (pscanZZ == true && mscanZZ1 == true && mscanZZ2 == true && ffmZZ == true && fscanZZ == true) {
+            zongfenshu = pscanFenshu + mscanFenshu + ffmFenshu + fscanFenshu;
+            alert("考试结束，总分为：" + zongfenshu);
+            //pscan部分禁止填写。
+            document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+            document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+            document.getElementById("pscanButton").setAttribute("disabled", true);
+            //mscan部分禁止填写
+            document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("mscan_canshu").setAttribute("disabled", true);
+            document.getElementById("mscanButton").setAttribute("disabled", true);
+            document.getElementById("mscan_houxu").setAttribute("disabled", true);
+            document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+            //ffm部分禁止填写
+            document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+            document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+            document.getElementById("ffm_CF").setAttribute("disabled", true);
+            // document.getElementById("ffm_SF").setAttribute("disabled", true);
+            document.getElementById("ffm_BF").setAttribute("disabled", true);
+            document.getElementById("ffmButton").setAttribute("disabled", true);
+            //fscan部分禁止填写
+            document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("fscanButton").setAttribute("disabled", true);
+            clearInterval(timer); //清除定时器
+            var total = "你已经完成考试，考试总分为：";
+            total += zongfenshu;
+            document.getElementById("totalResult").innerHTML = total;
+            writeTotxt(id, pscanFenshu, mscanFenshu, ffmFenshu, fscanFenshu, zongfenshu);
+            document.getElementById("kaoshiqingkuang").style.display = "";
+        }
+    }
+
+    //mscan考试内容
+    var mscan_canshu = "";
+    var number = randomNum(0, 3);
+    switch (number) {
+        case 0:
+            mscan_canshu = "87 93.2 97 102 105.3 113.5 117";
+            break;
+        case 1:
+            mscan_canshu = "88 103.5 105 107 108";
+            break;
+        case 2:
+            mscan_canshu = "89 97 100 103";
+            break;
+        case 3:
+            mscan_canshu = "90 95.3 99";
+            break;
+        default:
+            break;
+    }
+    //数据路径
+    var mscanpath = "D:\\datas\\MscanDatas\\" + mscan_canshu + "\\1.txt";
+    // src="img/MSCAN/87.0 93.2 97.0 102.0 105.3 113.5 117.0/10.png"
+    var mscanpath = "img/MSCAN/" + mscan_canshu + "/";
+    var MSCANsrc1 = mscanpath + "1.png";
+    var MSCANsrc2 = mscanpath + "2.png";
+    var MSCANsrc3 = mscanpath + "3.png";
+    var MSCANsrc4 = mscanpath + "4.png";
+    var MSCANsrc5 = mscanpath + "5.png";
+    var MSCANsrc6 = mscanpath + "6.png";
+    var MSCANsrc7 = mscanpath + "7.png";
+    var MSCANsrc8 = mscanpath + "8.png";
+    var MSCANsrc9 = mscanpath + "9.png";
+    var MSCANsrc10 = mscanpath + "10.png";
+    document.getElementById("MSCANIMG1").src = MSCANsrc1;
+    document.getElementById("MSCANIMG2").src = MSCANsrc2;
+    document.getElementById("MSCANIMG3").src = MSCANsrc3;
+    document.getElementById("MSCANIMG4").src = MSCANsrc4;
+    document.getElementById("MSCANIMG5").src = MSCANsrc5;
+    document.getElementById("MSCANIMG6").src = MSCANsrc6;
+    document.getElementById("MSCANIMG7").src = MSCANsrc7;
+    document.getElementById("MSCANIMG8").src = MSCANsrc8;
+    document.getElementById("MSCANIMG9").src = MSCANsrc9;
+    document.getElementById("MSCANIMG10").src = MSCANsrc10;
+
+
+    // console.log(mscan_canshu);
+    console.log(mscanpath);
+    document.getElementById("mscancanshu").innerHTML = mscan_canshu;
+
+    function compareMscan() {
+        //标记正确个数，3个都正确才显示对应图像。
+        var ym = 0;
+        //获取协议
+        var mscanXieyi = document.getElementById("mscan_xieyi").value;
+        //获取扫描方式
+        var mSel = document.getElementById("mscan_saomiao");
+        var mindex = mSel.selectedIndex;
+        var mscanSaomiao = mSel.options[mindex].value;
+        //获取用户输入参数
+        var mcanshu = document.getElementById("mscan_canshu").value;
+        // console.log(mscanXieyi);
+        // console.log(mscanSaomiao);
+        // console.log(mcanshu);
+        console.log(mscanXieyi);
+        console.log(mscanSaomiao);
+        console.log(mcanshu);
+
+        if (mscanXieyi == "" || mcanshu == "") {
+            alert("不能有空");
+        } else {
+            //表示mscan第一部分答完
+            mscanZZ1 = true;
+            mscanZZ2 = true;
+            document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("mscan_canshu").setAttribute("disabled", true);
+            document.getElementById("mscanButton").setAttribute("disabled", true);
+            var ms = "";
+            if (mscanXieyi == "scpi" || mscanXieyi == "SCPI") {
+                ym += 1;
+                mscanFenshu += 5;
+                ms += "通信协议正确；" + "<br>";
+            } else {
+                ms += "通信协议不正确，应为：SCPI；" + "<br>";
+            }
+            if (mscanSaomiao == "MSCAN") {
+                ym += 1;
+                mscanFenshu += 5;
+                ms += "扫描方式正确；" + "<br>";
+            } else {
+                ms += "扫描方式不正确，应为：MSCAN；" + "<br>";
+            }
+            if (mcanshu == mscan_canshu) {
+                ym += 1;
+                mscanFenshu += 5;
+                ms += "扫描频率正确；"; +"<br>";
+            } else {
+                ms += "扫描频率不正确，应为：" + mscan_canshu + "；"; +"<br>";
+            }
+            document.getElementById("mscanResult").innerHTML = ms;
+            console.log(ym);
+            if (ym == 3) {
+                //在这里加显示数据图片的代码。对应数据路径为 mscanpath,在div的id等于mscanimg加数据图片
+                document.getElementById("mscanHouxutimu").style.display = "";//显示
+                document.getElementById("mscanimg").style.display = "";
+                document.getElementById("mscanTable1").style.display = "none";
+                document.getElementById("mscanButton").style.display = "none";
+            }
+        }
+    }
+
+    function compareMscanHouxu() {
+        var mscanHouxu = document.getElementById("mscan_houxu").value;
+        if (mscanHouxu == "") {
+            alert("不能为空");
+        } else {
+            mscanZZ2 = true;
+            document.getElementById("mscan_houxu").setAttribute("disabled", true);
+            document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+            if (mscanHouxu == mscan_canshu) {
+                var mshx = "<br>" + "正确;"
+                mscanFenshu += 10;
+            } else {
+                var mshx = "<br>" + "不正确，应为" + mscan_canshu + ";";
+            }
+            document.getElementById("mscanHOUXU").innerHTML = mshx;
+            if (pscanZZ == true && mscanZZ1 == true && mscanZZ2 == true && ffmZZ == true && fscanZZ == true) {
+                zongfenshu = pscanFenshu + mscanFenshu + ffmFenshu + fscanFenshu;
+                alert("考试结束，总分为：" + zongfenshu);
+                //pscan部分禁止填写。
+                document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+                document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("pscanButton").setAttribute("disabled", true);
+                //mscan部分禁止填写
+                document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("mscan_canshu").setAttribute("disabled", true);
+                document.getElementById("mscanButton").setAttribute("disabled", true);
+                document.getElementById("mscan_houxu").setAttribute("disabled", true);
+                document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+                //ffm部分禁止填写
+                document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+                document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+                document.getElementById("ffm_CF").setAttribute("disabled", true);
+                // document.getElementById("ffm_SF").setAttribute("disabled", true);
+                document.getElementById("ffm_BF").setAttribute("disabled", true);
+                document.getElementById("ffmButton").setAttribute("disabled", true);
+                //fscan部分禁止填写
+                document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("fscanButton").setAttribute("disabled", true);
+                clearInterval(timer); //清除定时器
+                var total = "你已经完成考试，考试总分为：";
+                total += zongfenshu;
+                document.getElementById("totalResult").innerHTML = total;
+                writeTotxt(id, pscanFenshu, mscanFenshu, ffmFenshu, fscanFenshu, zongfenshu);
+                document.getElementById("kaoshiqingkuang").style.display = "";
+            }
+        }
+
+    }
+
+    // ffm考试内容
+    var ffm_canshu = "";
+    var number = randomNum(0, 2);
+    switch (number) {
+        case 0:
+            ffm_canshu = "90 9 160";
+            break;
+        case 1:
+            ffm_canshu = "95 9 150";
+            break;
+        case 2:
+            ffm_canshu = "100 9 150";
+            break;
+        default:
+            break;
+    }
+
+    //数据路径  src="img/FFM/90 9 160/1.png" 
+    //var ffmpath = "D:\\datas\\FfmDatas\\" + ffm_canshu + "\\1.txt";
+
+    var ffmpath = "img/FFM/" + ffm_canshu + "/";
+    var FFMsrc1 = ffmpath + "1.png";
+    var FFMsrc2 = ffmpath + "2.png";
+    var FFMsrc3 = ffmpath + "3.png";
+    var FFMsrc4 = ffmpath + "4.png";
+    var FFMsrc5 = ffmpath + "5.png";
+    document.getElementById("FFMIMG1").src = FFMsrc1;
+    document.getElementById("FFMIMG2").src = FFMsrc2;
+    document.getElementById("FFMIMG3").src = FFMsrc3;
+    document.getElementById("FFMIMG4").src = FFMsrc4;
+    document.getElementById("FFMIMG5").src = FFMsrc5;
+
+
+    console.log("ffm:");
+    console.log(ffmpath);
+    // console.log(ffm_canshu)
+    var ffmlist = ffm_canshu.split(' ');
+    var centerFreq, spanFreq, bandFreq;
+    centerFreq = ffmlist[0];
+    spanFreq = ffmlist[1];
+    bandFreq = ffmlist[2];
+    document.getElementById("ffm_centerF").innerHTML = centerFreq;
+    document.getElementById("ffm_bandF").innerHTML = bandFreq;
+
+    var ffmSSS = "";
+    var ffmA = randomNum(1, 5);
+    var ffmC = randomNum(20, 25);
+    var ffmD = randomNum(30, 35);
+    ffmSSS += "A.";
+    ffmSSS += ffmA;
+    ffmSSS += "kHz" + "<br>";
+    ffmSSS += "B.9kHz" + "<br>";
+    ffmSSS += "C.";
+    ffmSSS += ffmC;
+    ffmSSS += "kHz" + "<br>";
+    ffmSSS += "D.";
+    ffmSSS += ffmD;
+    ffmSSS += "kHz" + "<br>";
+    document.getElementById("ffm_2").innerHTML = ffmSSS;
+
+    function compareFfm() {
+        var yf = 0;
+        //获取协议
+        var ffmXieyi = document.getElementById("ffm_xieyi").value;
+        //获取扫描方式
+        var fSel = document.getElementById("ffm_saomiao");
+        var findex = fSel.selectedIndex;
+        var ffmSaomiao = fSel.options[findex].value;
+
+        //获取中心频率
+        var ffmCF = document.getElementById("ffm_CF").value;
+        //获取解调宽度
+        var ffmBF = document.getElementById("ffm_BF").value;
+        console.log(ffmXieyi);
+        console.log(ffmSaomiao);
+        console.log(ffmCF);
+        // console.log(ffmSF);
+        console.log(ffmBF);
+
+        if (ffmXieyi == "" || ffmCF == "" || ffmBF == "") {
+            alert("不能有空");
+        } else {
+            //ffm部分以及答完
+            ffmZZ = true;
+            document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+            document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+            document.getElementById("ffm_CF").setAttribute("disabled", true);
+            // document.getElementById("ffm_SF").setAttribute("disabled", true);
+            document.getElementById("ffm_BF").setAttribute("disabled", true);
+            document.getElementById("ffmButton").setAttribute("disabled", true);
+            var fs = "";
+            if (ffmXieyi == "scpi" || ffmXieyi == "SCPI") {
+                yf += 1;
+                ffmFenshu += 5;
+                fs += "通信协议正确；" + "<br>";
+            } else {
+                fs += "通信协议不正确，应为：SCPI" + "<br>";
+            }
+            if (ffmSaomiao == "FFM") {
+                yf += 1;
+                ffmFenshu += 5;
+                fs += "扫描方式正确；" + "<br>";
+            } else {
+                fs += "扫描方式不正确；应为：FFM；" + "<br>";
+            }
+            if (ffmCF == centerFreq) {
+                yf += 1;
+                ffmFenshu += 5;
+                fs += "中心频率正确；" + "<br>";
+            } else {
+                fs += "FREQuency不正确，应为：" + centerFreq + "；" + "<br>";
+            }
+            // if (ffmSF == spanFreq) {
+            //     yf += 1;
+            //     ffmFenshu += 5;
+            //     fs += "显示宽度正确；" + "<br>";
+            // } else {
+            //     fs += "FREQ:SPAN不正确，应为：" + spanFreq + "；" + "<br>";
+            // }
+            if (ffmBF == bandFreq) {
+                yf += 1;
+                ffmFenshu += 5;
+                fs += "解调带宽正确；" + "<br>";
+            } else {
+                fs += "BAND不正确，应为：" + bandFreq + "；" + "<br>";
+            }
+            console.log(fs);
+            document.getElementById("ffmResult").innerHTML = fs;
+            if (yf == 4) {
+                document.getElementById("ffmimg").style.display = "";//显示
+                document.getElementById("ffmTable22").style.display = "none";
+                document.getElementById("ffmButton").style.display = "none";
+                document.getElementById("ffmTable").style.display = "";
+            }
+        }
+    }
+
+    function compareFfmHOUXU() {
+        console.log(ffmSSS);
+        var fSel = document.getElementById("ffm_1");
+        var findex = fSel.selectedIndex;
+        var ffmxuanze = fSel.options[findex].value;
+        console.log(ffmxuanze);
+        var SSSSS = "";
+        if (ffmxuanze == "B") {
+            ffmFenshu += 5;
+            SSSSS += "选择正确;";
+        } else {
+            SSSSS += "选择不正确，应选B;";
+        }
+        document.getElementById("ffmResult2").innerHTML = SSSSS;
+        console.log(ffmFenshu);
+        document.getElementById("ffm_1").setAttribute("disabled", true);
+        document.getElementById("FFMHOUXU").setAttribute("disabled", true);
+        if (pscanZZ == true && mscanZZ1 == true && mscanZZ2 == true && ffmZZ == true && fscanZZ == true) {
+            zongfenshu = pscanFenshu + mscanFenshu + ffmFenshu + fscanFenshu;
+            alert("考试结束，总分为：" + zongfenshu);
+            //pscan部分禁止填写。
+            document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+            document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+            document.getElementById("pscanButton").setAttribute("disabled", true);
+            //mscan部分禁止填写
+            document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("mscan_canshu").setAttribute("disabled", true);
+            document.getElementById("mscanButton").setAttribute("disabled", true);
+            document.getElementById("mscan_houxu").setAttribute("disabled", true);
+            document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+            //ffm部分禁止填写
+            document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+            document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+            document.getElementById("ffm_CF").setAttribute("disabled", true);
+            // document.getElementById("ffm_SF").setAttribute("disabled", true);
+            document.getElementById("ffm_BF").setAttribute("disabled", true);
+            document.getElementById("ffmButton").setAttribute("disabled", true);
+            //fscan部分禁止填写
+            document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("fscanButton").setAttribute("disabled", true);
+            clearInterval(timer); //清除定时器
+            var total = "你已经完成考试，考试总分为：";
+            total += zongfenshu;
+            document.getElementById("totalResult").innerHTML = total;
+            writeTotxt(id, pscanFenshu, mscanFenshu, ffmFenshu, fscanFenshu, zongfenshu);
+            document.getElementById("kaoshiqingkuang").style.display = "";
+        }
+    }
+
+
+    //fscan考试内容
+    var fscan_canshu = "";
+    var number = randomNum(0, 4);
+    switch (number) {
+        case 0:
+            fscan_canshu = "87 108 25";
+            break;
+        case 1:
+            fscan_canshu = "90 100 25";
+            break;
+        case 2:
+            fscan_canshu = "93 105 50";
+            break;
+        case 3:
+            fscan_canshu = "99 105 50";
+            break;
+        case 4:
+            fscan_canshu = "100 108 100";
+            break;
+        default:
+            break;
+    }
+    //数据路径
+    var fscanpath = "D:\\datas\\FscanDatas\\" + fscan_canshu + "\\1.txt";
+
+    var fscanpath = "img/PSCAN/" + fscan_canshu + "/";
+    var FSCANsrc1 = fscanpath + "1.png";
+    var FSCANsrc2 = fscanpath + "2.png";
+    var FSCANsrc3 = fscanpath + "3.png";
+    var FSCANsrc4 = fscanpath + "4.png";
+    var FSCANsrc5 = fscanpath + "5.png";
+    document.getElementById("FSCANIMG1").src = FSCANsrc1;
+    document.getElementById("FSCANIMG2").src = FSCANsrc2;
+    document.getElementById("FSCANIMG3").src = FSCANsrc3;
+    document.getElementById("FSCANIMG4").src = FSCANsrc4;
+    document.getElementById("FSCANIMG5").src = FSCANsrc5;
+
+    var flist = fscan_canshu.split(' ');
+    var fstartFreq, fstopFreq, fstepFreq;
+    console.log(flist);
+    fstartFreq = flist[0];
+    fstopFreq = flist[1];
+    fstepFreq = flist[2];
+    document.getElementById("fscan_startF").innerHTML = fstartFreq;
+    document.getElementById("fscan_stopF").innerHTML = fstopFreq;
+    document.getElementById("fscan_stepF").innerHTML = fstepFreq;
+
+
+    function compareFscan() {
+        //标记正确个数，五个都正确才显示对应图像。
+        var yff = 0;
+        //获取协议
+        var fscanXieyi = document.getElementById("fscan_xieyi").value;
+        //获取扫描方式
+        var ffSel = document.getElementById("fscan_saomiao");
+        var ffindex = ffSel.selectedIndex;
+        var fscanSaomiao = ffSel.options[ffindex].value;
+
+        //获取起始频率
+        var fscanStartFreq = document.getElementById("fscan_startFreq").value;
+        // //获取结束频率
+        var fscanStopFreq = document.getElementById("fscan_stopFreq").value;
+        // //获取步进
+        var fscanStepFreq = document.getElementById("fscan_stepFreq").value;
+
+        console.log(fscanXieyi);
+        console.log(fscanSaomiao);
+        console.log(fscanStartFreq);
+        console.log(fscanStopFreq);
+        console.log(fscanStepFreq);
+        if (fscanXieyi == "" || fscanStartFreq == "" || fscanStopFreq == "" || fscanStepFreq == "") {
+            alert("不能有空")
+        } else {
+            //表示fscan部分已经答完
+            fscanZZ = true;
+
+            document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+            document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+            document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+            document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+            document.getElementById("fscanButton").setAttribute("disabled", true);
+            var ffs = "";
+            if (fscanXieyi == "SCPI" || fscanXieyi == "scpi") {
+                fscanFenshu += 5;
+                yff += 1;
+                ffs += "通信协议正确；" + "<br>";
+            } else {
+                ffs += "通信协议不正确，应为：SCPI；" + "<br>";
+            }
+            if (fscanSaomiao == "FSCAN") {
+                yff += 1;
+                fscanFenshu += 5;
+                ffs += "扫描方式正确；" + "<br>";
+            } else {
+                ffs += "扫描不正确，应为：FSCAN;" + "<br>";
+            }
+            if (fscanStartFreq == fstartFreq) {
+                yff += 1;
+                fscanFenshu += 5;
+                ffs += "起始频率正确；" + "<br>";
+            } else {
+                ffs += "FREQ:STAR不正确，应为" + fstartFreq + "；" + "<br>";
+            }
+            if (fscanStopFreq == fstopFreq) {
+                yff += 1;
+                fscanFenshu += 5;
+                ffs += "终止频率正确；" + "<br>";
+            } else {
+                ffs += "FREQ:STOP不正确，应为：" + fstopFreq + "；" + "<br>";
+            }
+            if (fscanStepFreq == fstepFreq) {
+                yff += 1;
+                fscanFenshu += 5;
+                ffs += "步进正确；" + "<br>";
+            } else {
+                ffs += "STEP不正确，应为：" + fstepFreq + "；" + "<br>";
+            }
+            document.getElementById("fscanResult").innerHTML = ffs;
+            // console.log(fscanXieyi);
+            // console.log(fscanSaomiao);
+            // console.log(fscanStartFreq);
+            // console.log(fscanStopFreq);
+            // console.log(fscanStepFreq);
+            if (yff == 5) {
+                //在这里加显示数据图片的代码。对应数据路径为 pscanpath,在div的id等于pscanimg加数据图片
+                document.getElementById("fscanimg").style.display = "";//显示
+            }
+
+            if (pscanZZ == true && mscanZZ1 == true && mscanZZ2 == true && ffmZZ == true && fscanZZ == true) {
+                zongfenshu = pscanFenshu + mscanFenshu + ffmFenshu + fscanFenshu;
+                alert("考试结束，总分为：" + zongfenshu);
+                //pscan部分禁止填写。
+                document.getElementById("pcan_xieyi").setAttribute("disabled", true);
+                document.getElementById("pscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("pscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("pscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("pscanButton").setAttribute("disabled", true);
+                //mscan部分禁止填写
+                document.getElementById("mscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("mscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("mscan_canshu").setAttribute("disabled", true);
+                document.getElementById("mscanButton").setAttribute("disabled", true);
+                document.getElementById("mscan_houxu").setAttribute("disabled", true);
+                document.getElementById("mscanButtonhouxu").setAttribute("disabled", true);
+                //ffm部分禁止填写
+                document.getElementById("ffm_xieyi").setAttribute("disabled", true);
+                document.getElementById("ffm_saomiao").setAttribute("disabled", true);
+                document.getElementById("ffm_CF").setAttribute("disabled", true);
+                // document.getElementById("ffm_SF").setAttribute("disabled", true);
+                document.getElementById("ffm_BF").setAttribute("disabled", true);
+                document.getElementById("ffmButton").setAttribute("disabled", true);
+                //fscan部分禁止填写
+                document.getElementById("fscan_xieyi").setAttribute("disabled", true);
+                document.getElementById("fscan_saomiao").setAttribute("disabled", true);
+                document.getElementById("fscan_startFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stepFreq").setAttribute("disabled", true);
+                document.getElementById("fscan_stopFreq").setAttribute("disabled", true);
+                document.getElementById("fscanButton").setAttribute("disabled", true);
+                clearInterval(timer); //清除定时器
+                var total = "你已经完成考试，考试总分为：";
+                total += zongfenshu;
+                document.getElementById("totalResult").innerHTML = total;
+                console.log(total);
+                writeTotxt(id, pscanFenshu, mscanFenshu, ffmFenshu, fscanFenshu, zongfenshu);
+                document.getElementById("kaoshiqingkuang").style.display = "";
+            }
+        }
+    }//函数结尾
+
+    function chuanzhihanshu() {
+        window.open('zhangshi.html');
+    }
+</script>
+
+</html>
